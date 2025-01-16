@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+    postgres:
+        image: postgres:17-bookworm
+        restart: always
+        container_name: postgres
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_DB: receitas_db
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PORT: ${DB_PORT}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+        networks:
+            - db-connection
+        volumes:
+            - recipes-postgres:/var/lib/postgresql/data
+    api:
+        build: .
+        container_name: api
+        ports:
+            - 8000:80
+        volumes:
+            - .:/app
+        command: sh -c "composer install && php artisan serve --host=0.0.0.0 --port=80"
+        networks:
+            - db-connection
+        environment:
+            DB_CONNECTION: ${DB_CONNECTION}
+            DB_HOST: ${DB_HOST}
+            DB_PORT: ${DB_PORT}
+            DB_USERNAME: ${DB_USERNAME}
+            DB_PASSWORD: ${DB_PASSWORD}
+            APP_TOKEN: ${APP_TOKEN}
+
+volumes:
+    recipes-postgres:
+networks:
+    db-connection: # Definição da rede
+        driver: bridge
