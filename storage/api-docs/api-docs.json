@@ -1,0 +1,392 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Coffee Extration API",
+        "description": "Control coffe extration entries",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/coffee": {
+            "get": {
+                "tags": [
+                    "coffee"
+                ],
+                "summary": "Get all coffee extractions",
+                "description": "Get all coffee extractions",
+                "operationId": "getCoffee",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false
+                    },
+                    {
+                        "name": "coffee_bean",
+                        "in": "query",
+                        "description": "Coffee bean type",
+                        "required": false
+                    },
+                    {
+                        "name": "brew_method",
+                        "in": "query",
+                        "description": "Brew method",
+                        "required": false
+                    },
+                    {
+                        "name": "grind_size",
+                        "in": "query",
+                        "description": "Grind size",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of coffee extractions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Coffee"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "coffee"
+                ],
+                "summary": "Create a new coffee extraction",
+                "description": "Create a new coffee extraction with the provided details",
+                "operationId": "createCoffe",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "coffee_bean",
+                                    "brew_method",
+                                    "grind_size",
+                                    "water_amount"
+                                ],
+                                "properties": {
+                                    "coffee_bean": {
+                                        "type": "string",
+                                        "example": "Arabica"
+                                    },
+                                    "brew_method": {
+                                        "type": "string",
+                                        "example": "Pour Over"
+                                    },
+                                    "grind_size": {
+                                        "type": "string",
+                                        "example": "Medium"
+                                    },
+                                    "water_amount": {
+                                        "type": "string",
+                                        "example": "500ml"
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "rating": {
+                                        "type": "string",
+                                        "example": "5"
+                                    },
+                                    "notes": {
+                                        "type": "string",
+                                        "example": "Sweet"
+                                    },
+                                    "water_temp": {
+                                        "type": "string",
+                                        "example": "90C"
+                                    },
+                                    "coffee_qtd": {
+                                        "type": "string",
+                                        "example": "10g"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Coffee extraction created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/coffee/{coffee}": {
+            "get": {
+                "tags": [
+                    "coffee"
+                ],
+                "summary": "Get a coffee extraction",
+                "description": "Get a coffee extraction",
+                "operationId": "getCoffe",
+                "parameters": [
+                    {
+                        "name": "coffee",
+                        "in": "path",
+                        "description": "Coffee ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Coffee extraction",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Coffee"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "coffee"
+                ],
+                "summary": "Update a coffee extraction",
+                "description": "Update a coffee extraction with the provided details",
+                "operationId": "updateCoffe",
+                "parameters": [
+                    {
+                        "name": "coffee",
+                        "in": "path",
+                        "description": "Coffee ID",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "coffee_bean",
+                                    "brew_method",
+                                    "grind_size",
+                                    "water_amount"
+                                ],
+                                "properties": {
+                                    "coffee_bean": {
+                                        "type": "string",
+                                        "example": "Arabica"
+                                    },
+                                    "brew_method": {
+                                        "type": "string",
+                                        "example": "Pour Over"
+                                    },
+                                    "grind_size": {
+                                        "type": "string",
+                                        "example": "Medium"
+                                    },
+                                    "water_amount": {
+                                        "type": "string",
+                                        "example": "500ml"
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "rating": {
+                                        "type": "string",
+                                        "example": "5"
+                                    },
+                                    "notes": {
+                                        "type": "string",
+                                        "example": "Sweet"
+                                    },
+                                    "water_temp": {
+                                        "type": "string",
+                                        "example": "90C"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Coffee extraction created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/recipes": {
+            "post": {
+                "tags": [
+                    "recipes"
+                ],
+                "summary": "Create a new recipe",
+                "description": "Create a new recipe with the provided details",
+                "operationId": "createRecipe",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Title of recipe",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "ingredients",
+                                    "instructions"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Chocolate Cake"
+                                    },
+                                    "ingredients": {
+                                        "type": "string",
+                                        "example": "Flour, Sugar, Cocoa Powder, Eggs"
+                                    },
+                                    "instructions": {
+                                        "type": "string",
+                                        "example": "Mix ingredients and bake at 350 degrees for 30 minutes"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Recipe created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Coffee": {
+                "title": "Coffee",
+                "description": "Coffee model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "coffe_bean": {
+                        "type": "string",
+                        "example": "Arabica"
+                    },
+                    "brew_method": {
+                        "type": "string",
+                        "example": "Pour Over"
+                    },
+                    "grind_size": {
+                        "type": "string",
+                        "example": "Medium"
+                    },
+                    "water_amount": {
+                        "type": "string",
+                        "example": "500ml"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "rating": {
+                        "type": "string",
+                        "example": "5"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "example": "Sweet"
+                    },
+                    "water_temp": {
+                        "type": "string",
+                        "example": "90C"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "coffee",
+            "description": "coffee"
+        },
+        {
+            "name": "recipes",
+            "description": "recipes"
+        }
+    ],
+    "security": [
+        {
+            "bearer": []
+        }
+    ]
+}
