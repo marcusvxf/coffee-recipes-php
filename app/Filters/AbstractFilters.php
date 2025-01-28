@@ -19,7 +19,12 @@ abstract class AbstractFilters{
     public function filter(Builder $builder): Builder
     {
         foreach($this->request->all() as $filter => $value){
-            if($this->filters[$filter] && method_exists($this,$this->filters[$filter])){
+            if(isset($this->filters[$filter]) && method_exists($this,$this->filters[$filter])){
+
+                if($this->filters[$filter] == 'generic'){
+                    $builder = $this->generic($builder,$filter,$value);
+                    continue;
+                }
                 $this->filters[$filter]($builder,$filter,$value);
             }
         }
@@ -29,6 +34,7 @@ abstract class AbstractFilters{
 
     public function generic(Builder $builder,string $filter,string $value ): Builder
     {
+
         return $builder->where($filter,$value);
     }
 

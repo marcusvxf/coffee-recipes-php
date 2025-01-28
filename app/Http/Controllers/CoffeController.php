@@ -41,8 +41,12 @@ class CoffeController extends Controller
      *)
      */
     public function index(Request $request): LengthAwarePaginator{
-
-        return Coffee::filter($request)->paginate();
+        try{
+            $coffees = Coffee::filter($request)->paginate();
+        }catch(\Exception $e) {
+            dd($e->getMessage());
+        }
+        return $coffees;
     }
 
 
@@ -85,7 +89,7 @@ class CoffeController extends Controller
             $valid_values = array_filter($request->only((new Coffee)->getFillable()));
             $coffee = Coffee::create($valid_values);
         }catch(\Exception $e){
-            var_dump($e->getMessage());
+            dd($e->getMessage());
         }
         return $coffee;
     }
