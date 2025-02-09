@@ -14,12 +14,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      DB_CONNECTION: pgsql
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USERNAME: admin
-      DB_PASSWORD: receitas123
-      DB_DATABASE: receitas_db
       APP_KEY: base64:ht2SHIjcporyO95jkM2dqhuOg84IyVOmeesqrPdiFR0=
       IMAGE_NAME: coffee-with-php
 
@@ -31,10 +25,13 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build image
+        env:
+          APP_KEY: base64:ht2SHIjcporyO95jkM2dqhuOg84IyVOmeesqrPdiFR0=
         run: docker build -t ${{env.IMAGE_NAME}} --file Dockerfile.prod .
 
       - name: Run tests
-        run: docker run --rm ${{env.IMAGE_NAME}} ./vendor/bin/phpunit tests/
+
+        run: docker run -e APP_KEY=${{env.APP_KEY}} --rm ${{env.IMAGE_NAME}} ./vendor/bin/phpunit tests/
 
   sast-analysis:
     name: Analise sast
