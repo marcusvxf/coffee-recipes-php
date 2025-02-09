@@ -17,7 +17,9 @@ services:
         volumes:
             - recipes-postgres:/var/lib/postgresql/data
     api:
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
         container_name: api
         ports:
             - 8000:80

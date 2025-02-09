@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipes;
 use Illuminate\Http\Request;
 
 /**
@@ -28,6 +29,8 @@ class RecipesController extends Controller
     *   ),
     * @OA\RequestBody(
     *    required=true,
+    *    description="Pass recipe details",
+    *    type="array"
     *    @OA\JsonContent(
     *       required={"name","ingredients","instructions"},
     *       @OA\Property(property="name", type="string", example="Chocolate Cake"),
@@ -48,7 +51,22 @@ class RecipesController extends Controller
     *   ),
     *)
     */
-    public function store(Request $request):int{
-        return 1;
+    public function store(Request $request){
+
+
+        $recipe = Recipes::create([
+            'name' => $request->name,
+            'description' => $request->ingredients,
+            'user_id' => $request->user_id, 
+        ]);
+
+        foreach($request->ingredients as $ingredients){
+            $recipe->ingredients()->create([
+                'name' => $ingredients->name,
+                'quantity' => $ingredients->quantity,
+            ]);
+        }
+
+        return $recipe->id;
     }
 }
