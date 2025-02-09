@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
     postgres:
         image: postgres:17-bookworm
@@ -20,7 +18,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile.dev
-        container_name: api
+        container_name: coffee-php
         ports:
             - 3000:80
         volumes:
