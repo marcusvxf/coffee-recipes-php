@@ -51,6 +51,8 @@ Aqui está a lista dos tipos:
 
 -   DOCS: para inserção/alteração em documentação
 
+-   CI: para inserção/alteração sobre os pipelines CI/CD
+
 Também possui um template para PRs dando um roteiro para as informações nele.
 
 ### :sun_with_face: Como Usar
