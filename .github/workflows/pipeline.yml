@@ -3,7 +3,7 @@ name: Coffee with PHP pipeline
 on:
   push:
     branches:
-      - main
+      - master
 
 permissions:
   contents: write
